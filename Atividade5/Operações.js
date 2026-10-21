@@ -1,1 +1,12 @@
-
+let n1 = prompt("Insira numero: ");
+let n2 = prompt("Insira numero: ");
+let soma = n1+n2;
+let subtracao = n1-n2;
+let produto = n1*n2;
+let divisao = n1/n2;
+let resto = n1%n2;
+alert(soma);
+alert(subtracao);
+alert(produto);
+alert(divisao);
+alert(resto);
