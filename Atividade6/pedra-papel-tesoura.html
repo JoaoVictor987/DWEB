@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Pedra, papel ou tesoura</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin-top: 40px; }
+    button { font-size: 18px; margin: 5px; padding: 10px 20px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Pedra, papel ou tesoura</h1>
+  <p>Faça sua escolha:</p>
+
+  <button onclick="jogar('pedra')">Pedra</button>
+  <button onclick="jogar('papel')">Papel</button>
+  <button onclick="jogar('tesoura')">Tesoura</button>
+
+  <p id="escolhas"></p>
+  <h2 id="resultado"></h2>
+
+  <script>
+    function jogar(usuario) {
+      // b. O computador faz uma escolha (random gera de 0 a 0.99...)
+      var opcoes = ['pedra', 'papel', 'tesoura'];
+      var numero = Math.random();               // [0, 1)
+      var computador = opcoes[Math.floor(numero * 3)]; // 0, 1 ou 2
+
+      // c. Determinar o vencedor
+      var resultado;
+      if (usuario === computador) {
+        resultado = 'Empate.';
+      } else if (usuario === 'pedra' && computador === 'tesoura') {
+        resultado = 'Pedra quebra tesoura. Você ganhou!';
+      } else if (usuario === 'tesoura' && computador === 'papel') {
+        resultado = 'Tesoura corta papel. Você ganhou!';
+      } else if (usuario === 'papel' && computador === 'pedra') {
+        resultado = 'Papel cobre a pedra. Você ganhou!';
+      } else if (computador === 'pedra' && usuario === 'tesoura') {
+        resultado = 'Pedra quebra tesoura. O computador ganhou!';
+      } else if (computador === 'tesoura' && usuario === 'papel') {
+        resultado = 'Tesoura corta papel. O computador ganhou!';
+      } else {
+        resultado = 'Papel cobre a pedra. O computador ganhou!';
+      }
+
+      document.getElementById('escolhas').innerHTML =
+        'Você escolheu: <b>' + usuario + '</b> | Computador escolheu: <b>' + computador + '</b>';
+      document.getElementById('resultado').innerHTML = resultado;
+    }
+  </script>
+</body>
+</html>
