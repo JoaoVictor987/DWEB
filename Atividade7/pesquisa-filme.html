@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Pesquisa do filme</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin-top: 40px; }
+    input, select, button { font-size: 16px; margin: 5px; padding: 6px; }
+  </style>
+</head>
+<body>
+  <h1>Pesquisa do filme</h1>
+  <p id="contador">Pessoa 1 de 45</p>
+
+  <div id="formulario">
+    <input type="number" id="idade" placeholder="Idade" min="0">
+    <select id="sexo">
+      <option value="feminino">Feminino</option>
+      <option value="masculino">Masculino</option>
+      <option value="outros">Outros</option>
+    </select>
+    <select id="opiniao">
+      <option value="4">Ótimo (4)</option>
+      <option value="3">Bom (3)</option>
+      <option value="2">Regular (2)</option>
+      <option value="1">Péssimo (1)</option>
+    </select>
+    <br>
+    <button onclick="registrar()">Registrar</button>
+  </div>
+
+  <div id="resultado"></div>
+
+  <script>
+    var TOTAL = 45;
+    var idades = [];
+    var sexos = [];
+    var opinioes = [];
+
+    function registrar() {
+      var idade = parseInt(document.getElementById('idade').value);
+      var sexo = document.getElementById('sexo').value;
+      var opiniao = parseInt(document.getElementById('opiniao').value);
+
+      if (isNaN(idade) || idade < 0) {
+        alert('Informe uma idade válida.');
+        return;
+      }
+
+      idades.push(idade);
+      sexos.push(sexo);
+      opinioes.push(opiniao);
+      document.getElementById('idade').value = '';
+
+      if (idades.length < TOTAL) {
+        document.getElementById('contador').innerHTML =
+          'Pessoa ' + (idades.length + 1) + ' de ' + TOTAL;
+      } else {
+        mostrarResultado();
+      }
+    }
+
+    function mostrarResultado() {
+      var soma = 0, maisVelha = idades[0], maisNova = idades[0];
+      var pessimo = 0, otimoBom = 0;
+      var mulheres = 0, homens = 0, outros = 0;
+
+      for (var i = 0; i < TOTAL; i++) {
+        soma += idades[i];
+        if (idades[i] > maisVelha) maisVelha = idades[i];
+        if (idades[i] < maisNova) maisNova = idades[i];
+
+        if (opinioes[i] === 1) pessimo++;
+        if (opinioes[i] === 4 || opinioes[i] === 3) otimoBom++;
+
+        if (sexos[i] === 'feminino') mulheres++;
+        else if (sexos[i] === 'masculino') homens++;
+        else outros++;
+      }
+
+      document.getElementById('formulario').style.display = 'none';
+      document.getElementById('contador').innerHTML = 'Pesquisa finalizada!';
+      document.getElementById('resultado').innerHTML =
+        '<p>Média das idades: ' + (soma / TOTAL).toFixed(1) + '</p>' +
+        '<p>Pessoa mais velha: ' + maisVelha + ' anos</p>' +
+        '<p>Pessoa mais nova: ' + maisNova + ' anos</p>' +
+        '<p>Responderam péssimo: ' + pessimo + '</p>' +
+        '<p>Porcentagem de ótimo e bom: ' + (otimoBom / TOTAL * 100).toFixed(1) + '%</p>' +
+        '<p>Mulheres: ' + mulheres + ' | Homens: ' + homens + ' | Outros: ' + outros + '</p>';
+    }
+  </script>
+</body>
+</html>
